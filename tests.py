@@ -1,7 +1,9 @@
 import unittest
+from unittest.mock import patch, call
 
 from decorator import Circle, Square, ColoredShape
 from factory import PointFactory
+from observer import Observable, Observer
 from singleton import Database
 
 
@@ -46,3 +48,20 @@ class DecoratorTest(unittest.TestCase):
         colored_square = ColoredShape(square, 'Red')
         expected = 'A square with side 3 has the color Red'
         self.assertEqual(str(colored_square), expected)
+
+
+class ObserverTest(unittest.TestCase):
+    @patch('builtins.print')
+    def test_broadcast(self, mock_print):
+        subject = Observable('Subject 1')
+
+        observer1 = Observer('Observer 1', subject)
+        observer2 = Observer('Observer 2', subject)
+
+        subject.notify_observers('Broadcast 1')
+        subject.unsubscribe(observer2)
+        subject.notify_observers('Broadcast 2')
+
+        self.assertEqual(mock_print.mock_calls, [call('Observer 1 got Broadcast 1 from Subject 1'),
+                                                 call('Observer 2 got Broadcast 1 from Subject 1'),
+                                                 call('Observer 1 got Broadcast 2 from Subject 1')])
