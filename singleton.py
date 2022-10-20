@@ -11,9 +11,4 @@ def singleton(class_):
 @singleton
 class Database:
     def __init__(self):
-        print('Loading database')
-
-
-d1 = Database()
-d2 = Database()
-print(d1 == d2)
+        pass
