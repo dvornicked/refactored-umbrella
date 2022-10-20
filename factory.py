@@ -24,9 +24,3 @@ class PointFactory:
     @staticmethod
     def new_polar_point(rho, theta):
         return Point(rho * sin(theta), rho * cos(theta))
-
-
-p1 = PointFactory.new_cartesian_point(5, 5)
-p2 = PointFactory.new_polar_point(5, 5)
-
-print(p1, p2, sep='\n')
